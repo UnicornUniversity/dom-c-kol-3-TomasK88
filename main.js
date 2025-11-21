@@ -35,6 +35,21 @@ export function main(dtoIn) {
     // pole pro vygenerované zaměstnance.
     const employees = [];
 
+//validace vstupů    
+if (typeof dtoIn.count !== "number" || dtoIn.count <= 0) {  //podmínka, že počet zaměstanců které chceme generovat musí být číslo větší než 0
+    console.error("Hodnota 'count' musí být kladné číslo.");
+  }
+  //podmínka pro věkový interval, validujeme jestli je zadáno číslo a jestli není minimální věk větší než maximální věk
+  if (  
+    typeof dtoIn.age !== "object" ||
+    typeof dtoIn.age.min !== "number" ||
+    typeof dtoIn.age.max !== "number" ||
+    dtoIn.age.min > dtoIn.age.max
+  ) {
+    console.error("Věkový interval je neplatný.");
+  }
+
+
     // generování tolika zaměstnanců, kolik je v dtoIn.count.
     for (let i = 0; i < dtoIn.count; i++) {
         // Pohlaví určíme náhodně (pravděpodobnost 50:50).
