@@ -9,7 +9,7 @@
  * Příklad výstupu (1 záznam):
  *   { gender: "male", birthdate: "1993-08-07T00:00:00.000Z", name: "Jan", surname: "Novák", workload: 40 }
  *
- * Poznámka: Datum narození generujeme tak, aby skutečný věk byl v intervalu <min, max> (včetně hran).
+ * Poznámka: Datum narození generujeme tak, aby skutečný věk byl v intervalu <min, max> včetně.
  *           Používáme průměrný rok 365.25 dne, což stačí vzhledem k toleranci testů.
  *
  * @param {object} dtoIn - Vstupní data (počet a věkový interval)
@@ -25,7 +25,7 @@ export function main(dtoIn) {
     const femaleNames = ["Jana", "Petra", "Lucie", "Tereza", "Eva", "Marie", "Hana", "Alena", "Veronika", "Kateřina"];
 
     // Příjmení rozdělené na mužské a ženské
-    //    U ženských příjmení vytvořeno samostatné pole, protože nefungovalo mechanicky přidat "-ová" k mužskému příjmení (např. Outrata -> Outratová).
+    //    U ženských příjmení vytvořeno samostatné pole, protože nefungovalo mechanicky přidat "-ová" k mužskému příjmení (např. Outrata -> Outrataová, Pokorný->Pokornýová apod. není správně).
     const maleSurnames = ["Novák", "Svoboda", "Dvořák", "Černý", "Procházka", "Kučera", "Outrata", "Pokorný", "Král", "Sedláček"];
     const femaleSurnames = ["Nováková", "Svobodová", "Dvořáková", "Černá", "Procházková", "Kučerová", "Outratová", "Pokorná", "Králová", "Sedláčková"];
 
@@ -36,7 +36,7 @@ export function main(dtoIn) {
     const employees = [];
 
 //validace vstupů    
-if (typeof dtoIn.count !== "number" || dtoIn.count <= 0) {  //podmínka, že počet zaměstanců které chceme generovat musí být číslo větší než 0
+if (typeof dtoIn.count !== "number" || dtoIn.count <= 0) {  //podmínka, že počet zaměstanců které chceme generovat musí být číslo větší než 0 a že je to vůbec číslo
     console.error("Hodnota 'count' musí být kladné číslo.");
   }
   //podmínka pro věkový interval, validujeme jestli je zadáno číslo a jestli není minimální věk větší než maximální věk
@@ -98,9 +98,9 @@ function randomInt(min, max) {
 /**
  * Vygeneruje náhodné datum narození tak, aby výsledný věk byl v intervalu <minAge, maxAge>.
  * Postup:
- *  - vezmeme aktuální čas,
- *  - spočítáme dvě hrany (nejmladší možný: "teď - minAge", nejstarší možný: "teď - maxAge"),
- *  - vybereme náhodný čas mezi těmito hranami.
+ *  - vezmu aktuální čas,
+ *  - spočítám dvě hrany (nejmladší možný: "teď - minAge", nejstarší možný: "teď - maxAge"),
+ *  - vybereu náhodný čas mezi těmito hranami.
  * @param {number} minAge - Minimální věk (v letech)
  * @param {number} maxAge - Maximální věk (v letech)
  * @returns {string} ISO datum narození (YYYY-MM-DDTHH:mm:ss.sssZ)
@@ -109,7 +109,7 @@ function generateBirthdate(minAge, maxAge) {
     // Aktuální datum/čas
     const now = new Date();
 
-    // Počet milisekund v jednom „průměrném“ roku (365.25 dne).
+    // Počet milisekund v jednom „průměrném“ roku (365.25 dne), dny*hodiny*minuty*sekundy*1000
     const msPerYear = 365.25 * 24 * 60 * 60 * 1000;
 
     //  Nejmladší dovolené datum narození 
